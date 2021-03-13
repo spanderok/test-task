@@ -49,4 +49,5 @@ export default function () {
     DataObj.Department = getSelectedOptionsDepartment();
     validateForm();
     console.log(DataObj);
+    return DataObj;
 };
