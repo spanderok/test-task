@@ -3,29 +3,38 @@ export default function () {
     //let requestURL = sendRequest('GET', URL).then(data => console.log(data)).catch(err => console.log(err));
 
     //but now for example i created response from server:
-    let requestURL = new URL('https://smthExample.com/search?FName=Dzmitry&LName=Palyka&Sex=Male&Skills=HTML|CSS|JavaScript&Department=FrontEnd|SalesForce');  //enter your url here
+    let paramsString = document.location.search;
+    
+    const searchParams = new URLSearchParams(paramsString);
 
-    document.getElementById('FName').value = requestURL.searchParams.get('FName');
-    document.getElementById('LName').value = requestURL.searchParams.get('LName');
-    document.getElementById('Email').value = requestURL.searchParams.get('Email');
-    document.getElementById('Phone').value = requestURL.searchParams.get('Phone');
+    // let requestURL = new URL('https://smthExample.com/search?FName=Dzmitry&LName=Palyka&Sex=Male&Skills=HTML|CSS|JavaScript&Department=FrontEnd|SalesForce');  //enter your url here
+
+    document.getElementById('FName').value = searchParams.get("FName");
+    console.log(searchParams.get("FName"));
+    document.getElementById('LName').value = searchParams.get("LName");
+    document.getElementById('Email').value = searchParams.get("Email");
+    document.getElementById('Phone').value = searchParams.get("Phone");
 
     //for radio button
-    if (requestURL.searchParams.get('Sex') === 'Male') {
+    if (searchParams.get('Sex') === 'Male') {
         document.getElementsByName('Sex')[0].checked = true;
-    } else if (requestURL.searchParams.get('Sex') === 'Female') {
+    } else if (searchParams.get('Sex') === 'Female') {
         document.getElementsByName('Sex')[1].checked = true;
     };
 
     //for select Skills
-    let arrSkillsFromData = requestURL.searchParams.get('Skills').split('|');
-    for (let i = 0; i < arrSkillsFromData.length; i++) {
-        document.getElementById(`${arrSkillsFromData[i]}`).checked = true;
+    if (searchParams.get('Skills')!= null) {
+        let arrSkillsFromData = searchParams.get('Skills').split('|');
+        for (let i = 0; i < arrSkillsFromData.length; i++) {
+            document.getElementById(`${arrSkillsFromData[i]}`).checked = true;
+        };
     };
 
     //for Department select
-    let arrDepartmentsFromData = requestURL.searchParams.get('Department').split('|');
-    for (let i = 0; i < arrDepartmentsFromData.length; i++) {
-        document.getElementById(`${arrDepartmentsFromData[i]}`).selected = true;
+    if (searchParams.get('Department')!= null) {
+        let arrDepartmentsFromData = searchParams.get('Department').split('|');
+        for (let i = 0; i < arrDepartmentsFromData.length; i++) {
+            document.getElementById(`${arrDepartmentsFromData[i]}`).selected = true;
+        };
     };
 };
